@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
         <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
         <script type="text/javascript">
             (function ($) {
@@ -24,14 +25,14 @@
                             var temperature = dataParts[1].trim();
                             var gauge = new LinearGauge({
                                 renderTo: 'linear-gauge',
-                                title: datetime,
+                                title: false,
                                 width: 120,
                                 height: window.innerHeight - 10,
                                 minValue: minValue,
                                 maxValue: maxValue,
                                 majorTicks: majorTicks,
                                 value: temperature,
-                                valueText: temperature.replace('.', ',') + ' graden',
+                                valueText: temperature.replace('.', ',') + ' °C',
                                 minorTicks: 3,
                                 strokeTicks: true,
                                 highlights: [
