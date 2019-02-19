@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript">
+            (function ($) {
+                var minValue = -15;
+                var maxValue = 45;
+                var majorTicks = [];
+                for(var i = minValue; i <= maxValue; i+=2) {
+                    majorTicks.push(i);
+                }
+                $(document).ready(function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "temperatuur_log.txt",
+                        dataType: "text",
+                        success: function (data) {
+                            if(data.length <= 0) { return; }
+                            var lines = data.trim().split('\n');
+                            var lastLine = lines.slice(-1)[0];
+                            var dataParts = lastLine.split('|');
+                            var datetime = dataParts[0].trim();
+                            var temperature = dataParts[1].trim();
+                            var gauge = new LinearGauge({
+                                renderTo: 'linear-gauge',
+                                title: datetime,
+                                width: 120,
+                                height: window.innerHeight - 10,
+                                minValue: minValue,
+                                maxValue: maxValue,
+                                majorTicks: majorTicks,
+                                value: temperature,
+                                valueText: temperature.replace('.', ',') + ' graden',
+                                minorTicks: 3,
+                                strokeTicks: true,
+                                highlights: [
+                                    { "from": minValue, "to": 5, "color": "rgba(0,0,255,.5)" },
+                                    { "from": 5, "to": 15, "color": "rgba(51,255,51,.5)" },
+                                    { "from": 15, "to": 25, "color": "rgba(255,128,0,.5)" },
+                                    { "from": 25, "to": 35, "color": "rgba(255,0,0,.5)" },
+                                    { "from": 35, "to": 45, "color": "rgba(153,0,153,.5)" }
+                                ],
+                                colorPlate: "#fff",
+                                borderShadowWidth: 0,
+                                borders: false,
+                                colorNeedle: 'red',
+                                needleType: "arrow",
+                                needleWidth: 2,
+                                tickSide: "left",
+                                numberSide: "left",
+                                needleSide: "left",
+                                barBeginCircle: false,
+                                colorBarProgress: "red"
+                            }).draw();
+                        }
+                    });
+                });
+            })(jQuery);
+        </script>
+        <style>
+            html, body {margin: 0; padding: 0;}
+            body{text-align: center;}
+        </style>
+    </head>
+    <body>
+        <canvas id="linear-gauge"></canvas>
+        <script type="text/javascript" src="js/lineargauge.min.js"></script>
+    </body>
+</html>
