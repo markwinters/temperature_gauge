@@ -8,7 +8,7 @@
                 var minValue = -15;
                 var maxValue = 45;
                 var majorTicks = [];
-                for(var i = minValue; i <= maxValue; i+=2) {
+                for(var i = minValue; i <= maxValue; i+=5) {
                     majorTicks.push(i);
                 }
                 $(document).ready(function () {
@@ -26,14 +26,14 @@
                             var gauge = new LinearGauge({
                                 renderTo: 'linear-gauge',
                                 title: datetime,
-                                width: 120,
+                                width: (window.innerWidth - 10) / 3.5,
                                 height: window.innerHeight - 10,
                                 minValue: minValue,
                                 maxValue: maxValue,
                                 majorTicks: majorTicks,
                                 value: temperature,
                                 valueText: temperature.replace('.', ',') + ' °C',
-                                minorTicks: 3,
+                                minorTicks: 5,
                                 strokeTicks: true,
                                 highlights: [
                                     { "from": minValue, "to": 5, "color": "rgba(0,0,255,.5)" },
